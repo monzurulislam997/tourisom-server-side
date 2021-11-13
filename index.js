@@ -22,7 +22,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const database = client.db("HappyHoliday");
+    const database = client.db("happyHoliday");
     const packages = database.collection("packages");
     const allOrders = database.collection("allOrders");
 
