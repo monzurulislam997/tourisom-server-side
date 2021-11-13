@@ -83,6 +83,10 @@ run().catch(console.dir);
 app.get("/", (req, res) => {
   res.send("this is response from server and welcome everybody !! :)");
 });
+app.get("/n", (req, res) => {
+  res.send("updated here)");
+});
+
 
 
 app.listen(port, () => {
