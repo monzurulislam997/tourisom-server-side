@@ -5,15 +5,21 @@ require("dotenv").config();
 const cors = require("cors");
 const app = express();
 
+<<<<<<< HEAD
 //middleware code
+=======
+//mildeware
+>>>>>>> d542af19bcda441eac6ad5d7e6d446714aceeb5e
 app.use(cors());
 app.use(express.json());
 const port = process.env.PORT || 5001;
 
-//  const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.gukqi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-const uri = "mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.1u9t2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-  // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  // console.log(uri,1455555555);
+//mongodb
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.1u9t2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
+
+//mongodb client
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -22,44 +28,43 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const database = client.db("happyHoliday");
-    const packages = database.collection("packages");
-    const allOrders = database.collection("allOrders");
+    const database = client.db("visionElectronics");
+    const services = database.collection("services");
+    const allServices = database.collection("allServices");
 
-    //find multiple data from database for service section
-    app.get("/packages", async (req, res) => {
+   
+    app.get("/services", async (req, res) => {
       const query = {};
-      const cursor = packages.find(query);
+      const cursor = services.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
-    //find single data from database
-    app.get("/packages/:id", async (req, res) => {
+
+    app.get("/services/:id", async (req, res) => {
       console.log("browser id is", req.params.id);
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const result = await packages.findOne(query);
+      const result = await services.findOne(query);
       res.send(result);
     });
 
-    //post user orders
 
-    app.post("/packages", async (req, res) => {
+
+    app.post("/services", async (req, res) => {
       const bookingInfo = req.body;
       const query = { bookingInfo };
       const result = await allOrders.insertOne(query);
       res.json(result);
     });
 
-    //Post for Adding new tour packages plan
-    app.post("/packagess",async(req,res)=>{
+
+    app.post("/booking",async(req,res)=>{
      const addingInfo =req.body
-    //  const query = {addingInfo}
-     const result = await packages.insertOne({addingInfo})
+  
+     const result = await services.insertOne({addingInfo})
      res.json(result)
     })
 
-    //Find all order
     app.get("/allOrder", async (req, res) => {
       const query = {};
       const cursor = allOrders.find(query);
@@ -67,7 +72,6 @@ async function run() {
       res.send(result);
     });
 
-    //Remove Order with Delete operation
     app.delete("/allOrder/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -94,5 +98,3 @@ app.listen(port, () => {
 });
 
 
-//user : happlyHoliday
-//pass: sIsJnCCrHxiHOVvq
